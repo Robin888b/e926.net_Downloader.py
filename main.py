@@ -1,13 +1,18 @@
-# info à compléter
-query = "wolf gay rating:e score:>800"    # Recherche dont les résultats seront télécharcés
-pages = 99                             # Nombre de pages de téléchargés
-file_name = "gay wolf yiff"        # Nom de l'image
-folder = "./download"          # Chemin d'accès du dossier ou tout vas être mis
-user = "username"         # vottre pseudo e621, un lien vers vottre profil ou vottre email
-
-
-import requests; import shutil
-url = "https://e621.net/posts.json?tags=" + query; headers = {'User-Agent': 'e621_downloader.py','From': user }; file_name = folder + "/" + file_name + " - post "; e = 1
+query = "chunie"
+pages = 99
+file_name = "chunie "
+folder_name = "chunie art"
+user = "ravenspart"
+use_multiple_folder = True
+#  Code, nothing to change
+import requests; import shutil;import os
+if os.path.exists(str(os.getcwd() + "/"+ folder_name)) == False: os.mkdir(str(os.getcwd() + "/"+ folder_name))
+folder = os.getcwd() + "/"+ folder_name
+if use_multiple_folder == True:
+    if os.path.exists(str(str(folder +"/rating_s"))) == False: os.mkdir(str(folder +"/rating_s"))
+    if os.path.exists(str(str(folder +"/rating_q"))) == False: os.mkdir(str(folder +"/rating_q"))
+    if os.path.exists(str(str(folder +"/rating_e"))) == False: os.mkdir(str(folder +"/rating_e"))
+url = "https://e621.net/posts.json?tags=" + query; headers = {'User-Agent': 'e621_downloader.py','From': user }; e = 1
 while not e > pages:
     finalUrl = url + "&page=" + str(e)
     print("\n\nPage N°"+str(e)+"\n")
@@ -17,9 +22,10 @@ while not e > pages:
         for i in result:
             if i["file"]["url"]:
                 a= ""
-                file = file_name + str(i["id"]) +"."+str(i["file"]["ext"])
+                if use_multiple_folder == True : file = folder + "/rating_" + str(i["rating"]) + "/" + file_name + str(i["id"]) +"."+str(i["file"]["ext"])
+                else : file = folder + "/" + file_name + str(i["id"]) +"."+str(i["file"]["ext"])
                 res = requests.get(i["file"]["url"], stream = True)
-                if res.status_code == 200:            
+                if res.status_code == 200:
                     with open(file,'wb') as f:
                         shutil.copyfileobj(res.raw, f)
                     print('Image sucessfully Downloaded: ',file)
