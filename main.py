@@ -2,7 +2,7 @@ query = "chunie"
 pages = 99
 file_name = "chunie "
 folder_name = "chunie art"
-user = "ravenspart"
+user = "YourUserNameHere"
 use_multiple_folder = True
 #  Code, nothing to change
 import requests; import shutil;import os
